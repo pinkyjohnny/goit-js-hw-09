@@ -50,9 +50,13 @@ function onStartBtnClick() {
     if (isActive) return;
     isActive = true;
     intervalId = setInterval(() => {
-        const diff = selectedDate - currentTime;
-        const time = convertMs(diff)
-        renderTime(time);
+        if (refs.dataDays.textContent && refs.dataHours.textContent && refs.dataMinutes.textContent && refs.dataSeconds.textContent === '00') {
+            clearInterval(intervalId)
+        } else {
+            const diff = selectedDate - Date.now();
+            const time = convertMs(diff)
+            renderTime(time);
+        }
     }, 1000);
 }
 
