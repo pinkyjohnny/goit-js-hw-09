@@ -11,8 +11,10 @@ const refs = {
 }
 
 
+let isActive = false;
+let selectedDate;
+let currentTime = Date.now();
 
-let userDate = null;
 
 const pickedDate = flatpickr("#datetime-picker", {
     enableTime: true,
@@ -24,33 +26,45 @@ const pickedDate = flatpickr("#datetime-picker", {
             window.alert("Please choose a date in the future")
             refs.startBtn.disabled = true;
         } else {
-            // console.log(selectedDates[0]);
-            userDate = selectedDates[0];
-// console.log(userDate);
+            selectedDate = selectedDates[0]
+            timerDate(selectedDates[0])
             refs.startBtn.disabled = false
         }
-       
+
     },
 });
+
+function timerDate(date) {
+    const diff = selectedDate - currentTime;
+    const time = convertMs(diff)
+    renderTime(time);
+}
 
 
 refs.startBtn.addEventListener('click', onStartBtnClick)
 
+
 let intervalId = null;
-let isActive = false;
 
 function onStartBtnClick() {
     if (isActive) return;
     isActive = true;
-    const initTime = Date.now();
-
     intervalId = setInterval(() => {
-        const currentTime = Date.now();
-        const diff = initTime - currentTime;
+        const diff = selectedDate - currentTime;
         const time = convertMs(diff)
         renderTime(time);
-    }, 1000)
+    }, 1000);
 }
+
+// function stopTimer() {
+//     if () {
+
+//     }
+//     refs.startBtn.disabled = true;
+//     clearInterval(timerId)
+// }
+
+// stopTimer()
 
 function renderTime({ days, hours, minutes, seconds }) {
     refs.dataDays.innerHTML = `${days}`;
@@ -73,19 +87,8 @@ function convertMs(ms) {
     return { days, hours, minutes, seconds };
 }
 
-// console.log(convertMs(2000)); // {days: 0, hours: 0, minutes: 0, seconds: 2}
-// console.log(convertMs(140000)); // {days: 0, hours: 0, minutes: 2, seconds: 20}
-// console.log(convertMs(24140000)); // {days: 0, hours: 6 minutes: 42, seconds: 20}
-
-
 function addLeadingZero(value) {
     return String(value).padStart(2, '0');
 }
 
-// function stopTimer() {
-//     if (condition) {
-        
-//     }
-//     refs.startBtn.disabled = true;
-//     clearInterval(timerId)
-// }
+
