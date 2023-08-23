@@ -11,6 +11,9 @@ const refs = {
 }
 
 
+
+let userDate = null;
+
 const pickedDate = flatpickr("#datetime-picker", {
     enableTime: true,
     time_24hr: true,
@@ -21,7 +24,9 @@ const pickedDate = flatpickr("#datetime-picker", {
             window.alert("Please choose a date in the future")
             refs.startBtn.disabled = true;
         } else {
-            console.log(selectedDates[0]);
+            // console.log(selectedDates[0]);
+            userDate = selectedDates[0];
+// console.log(userDate);
             refs.startBtn.disabled = false
         }
        
@@ -29,9 +34,14 @@ const pickedDate = flatpickr("#datetime-picker", {
 });
 
 
-refs.startBtn.addEventListener('click', onStartBrnClick)
+refs.startBtn.addEventListener('click', onStartBtnClick)
 
-function onStartBrnClick() {
+let intervalId = null;
+let isActive = false;
+
+function onStartBtnClick() {
+    if (isActive) return;
+    isActive = true;
     const initTime = Date.now();
 
     intervalId = setInterval(() => {
