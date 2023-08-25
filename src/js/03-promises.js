@@ -7,7 +7,7 @@ form.addEventListener('submit', (evt) => {
   evt.preventDefault();
 
   const delay = parseFloat(form.delay.value);
-  const step = parseFloat(form.delay.value);
+  const step = parseFloat(form.step.value);
   const amount = parseFloat(form.amount.value);
 
   for (let position = 1; position <= amount; position += 1) {
