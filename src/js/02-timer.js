@@ -37,7 +37,6 @@ const pickedDate = flatpickr("#datetime-picker", {
 function timerDate(date) {
     const diff = selectedDate - currentTime;
     const time = convertMs(diff)
-    renderTime(time);
 }
 
 
@@ -60,15 +59,6 @@ function onStartBtnClick() {
     }, 1000);
 }
 
-// function stopTimer() {
-//     if () {
-
-//     }
-//     refs.startBtn.disabled = true;
-//     clearInterval(timerId)
-// }
-
-// stopTimer()
 
 function renderTime({ days, hours, minutes, seconds }) {
     refs.dataDays.innerHTML = `${days}`;
